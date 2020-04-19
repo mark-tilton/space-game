@@ -8,10 +8,12 @@ public class Orbital : MonoBehaviour
 
     public Vector3 Velocity = new Vector3(0, 0, 0);
 
+    public TrailRenderer TrailRenderer = null;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        TrailRenderer = gameObject.GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
