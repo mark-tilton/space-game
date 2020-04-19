@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Orbital : MonoBehaviour
+[ExecuteInEditMode]
+public class SphereRadius : MonoBehaviour
 {
-    public float Mass = 1;
-
-    public Vector3 Velocity = new Vector3(0, 0, 0);
+    public float R = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +16,6 @@ public class Orbital : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var r = transform.localScale.x / 2;
-        Mass = 4f / 3f * Mathf.PI * r * r * r;
+        transform.localScale = new Vector3(R / 2, R / 2, R / 2);
     }
 }
