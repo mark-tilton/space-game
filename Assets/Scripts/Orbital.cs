@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Orbital : MonoBehaviour
 {
     public float Mass = 1;
@@ -13,7 +14,6 @@ public class Orbital : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TrailRenderer = gameObject.GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
