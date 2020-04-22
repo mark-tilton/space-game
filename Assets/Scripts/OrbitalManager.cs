@@ -31,7 +31,7 @@ public class OrbitalManager : MonoBehaviour
         var nextFrame = new List<OrbitalData>();
         foreach (var orbital in _orbitalData)
         {
-            var newVelocity = new Vector3(0, 0, 0);
+            var totalAcceleration = new Vector3(0, 0, 0);
             foreach (var otherOrbital in _orbitalData)
             {
                 if(orbital.Orbital == otherOrbital.Orbital)
@@ -39,17 +39,18 @@ public class OrbitalManager : MonoBehaviour
                     continue;
                 }
                 var dir = otherOrbital.Position - orbital.Position;
-                var r = dir.sqrMagnitude;
-
-                var mass = orbital.Mass * otherOrbital.Mass;
-                var force = G * mass / r;
+                var sqrDst = dir.sqrMagnitude;
+                var force = G * orbital.Mass * otherOrbital.Mass / sqrDst;
                 var acceleration = force / orbital.Mass;
 
-                // Gravity
-                newVelocity += acceleration * dir.normalized;
+                totalAcceleration += acceleration * dir.normalized;
             }
-            var newOrbitalData = orbital.Add(newVelocity, step);
+            var newOrbitalData = orbital.Add(totalAcceleration, step);
             nextFrame.Add(newOrbitalData);
+        }
+        foreach(var orbital in nextFrame)
+        {
+            orbital.SetPosition(step);
         }
         return nextFrame;
     }

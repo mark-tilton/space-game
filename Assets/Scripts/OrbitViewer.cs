@@ -9,6 +9,8 @@ public class OrbitViewer : MonoBehaviour
 
     private OrbitalManager _orbitalManager;
 
+    public Orbital Reference = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,9 +31,21 @@ public class OrbitViewer : MonoBehaviour
             {
                 nextFrame = _orbitalManager.GetNextFrame(nextFrame, _orbitalManager.TimeStep);
             }
+            var referencePosition = nextFrame.FirstOrDefault(x => x.Orbital == Reference)?.Position;
             foreach (var (prev, next) in previousFrame.Zip(nextFrame, (p, n) => (p, n)))
             {
-                Debug.DrawLine(prev.Position, next.Position);
+                if(Reference == prev.Orbital)
+                {
+                    continue;
+                }
+                var start = prev.Position;
+                var end = next.Position;
+                if(referencePosition != null)
+                {
+                    start -= referencePosition.Value;
+                    end -= referencePosition.Value;
+                }
+                Debug.DrawLine(start, end);
             }
             previousFrame = nextFrame;
         }

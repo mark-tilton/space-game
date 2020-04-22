@@ -21,5 +21,6 @@ public class Orbital : MonoBehaviour
     {
         var r = transform.localScale.x / 2;
         Mass = 4f / 3f * Mathf.PI * r * r * r;
+        Mass = 1;
     }
 }

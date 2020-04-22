@@ -17,12 +17,17 @@ public class OrbitalData
         Position = orbital.transform.position;
     }
 
-    public OrbitalData Add(Vector3 velocity, float step)
+    public OrbitalData Add(Vector3 acceleration, float step)
     {
         var newOrbital = new OrbitalData(Orbital);
-        newOrbital.Velocity = Velocity + velocity * step;
-        newOrbital.Position = Position + Velocity * step;
+        newOrbital.Velocity = Velocity + acceleration * step;
+        newOrbital.Position = Position;// + Velocity * step + 1/2 * acceleration * step * step;
         return newOrbital;
+    }
+
+    public void SetPosition(float step)
+    {
+        Position = Position + Velocity * step;
     }
 
     public void Apply()
