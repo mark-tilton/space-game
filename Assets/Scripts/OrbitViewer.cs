@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -27,20 +27,20 @@ public class OrbitViewer : MonoBehaviour
         for (var i = 0; i < StepCount; i++)
         {
             var nextFrame = previousFrame;
-            for(int j = 0; j < 1; j++)
+            for (int j = 0; j < 1; j++)
             {
                 nextFrame = _orbitalManager.GetNextFrame(nextFrame, _orbitalManager.TimeStep);
             }
             var referencePosition = nextFrame.FirstOrDefault(x => x.Orbital == Reference)?.Position;
             foreach (var (prev, next) in previousFrame.Zip(nextFrame, (p, n) => (p, n)))
             {
-                if(Reference == prev.Orbital)
+                if (Reference == prev.Orbital)
                 {
                     continue;
                 }
                 var start = prev.Position;
                 var end = next.Position;
-                if(referencePosition != null)
+                if (referencePosition != null)
                 {
                     start -= referencePosition.Value;
                     end -= referencePosition.Value;

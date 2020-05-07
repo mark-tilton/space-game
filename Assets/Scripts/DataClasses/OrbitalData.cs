@@ -21,13 +21,8 @@ public class OrbitalData
     {
         var newOrbital = new OrbitalData(Orbital);
         newOrbital.Velocity = Velocity + acceleration * step;
-        newOrbital.Position = Position;// + Velocity * step + 1/2 * acceleration * step * step;
+        newOrbital.Position = Position + newOrbital.Velocity * step;
         return newOrbital;
-    }
-
-    public void SetPosition(float step)
-    {
-        Position = Position + Velocity * step;
     }
 
     public void Apply()

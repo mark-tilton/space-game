@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -19,7 +19,7 @@ public class OrbitalManager : MonoBehaviour
     void Update()
     {
         var currentFrame = _orbitals.Select(x => new OrbitalData(x)).ToList();
-        foreach(var orbitalData in GetNextFrame(currentFrame, TimeStep))
+        foreach (var orbitalData in GetNextFrame(currentFrame, TimeStep))
         {
             orbitalData.Apply();
         }
@@ -27,30 +27,30 @@ public class OrbitalManager : MonoBehaviour
 
     public List<OrbitalData> GetNextFrame(List<OrbitalData> _orbitalData, float step)
     {
-        // Calculate new velocities for all the orbitals
         var nextFrame = new List<OrbitalData>();
         foreach (var orbital in _orbitalData)
         {
             var totalAcceleration = new Vector3(0, 0, 0);
             foreach (var otherOrbital in _orbitalData)
             {
-                if(orbital.Orbital == otherOrbital.Orbital)
+                if (orbital.Orbital == otherOrbital.Orbital)
                 {
                     continue;
                 }
+
                 var dir = otherOrbital.Position - orbital.Position;
                 var sqrDst = dir.sqrMagnitude;
-                var force = G * orbital.Mass * otherOrbital.Mass / sqrDst;
-                var acceleration = force / orbital.Mass;
+                if(sqrDst < 1e-3)
+                {
+                    continue;
+                }
+                var force = G * otherOrbital.Mass /* * orbital.Mass*/ / sqrDst;
+                var acceleration = force; // / orbital.Mass
 
                 totalAcceleration += acceleration * dir.normalized;
             }
             var newOrbitalData = orbital.Add(totalAcceleration, step);
             nextFrame.Add(newOrbitalData);
-        }
-        foreach(var orbital in nextFrame)
-        {
-            orbital.SetPosition(step);
         }
         return nextFrame;
     }
