@@ -1,17 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class Ship : MonoBehaviour
+public class Ship : Orbital
 {
     private Thruster[] _thrusters;
-    private Rigidbody _rigidBody;
 
     // Start is called before the first frame update
     void Start()
     {
         _thrusters = gameObject.GetComponentsInChildren<Thruster>();
-        _rigidBody = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -19,10 +18,9 @@ public class Ship : MonoBehaviour
     {
         foreach (var thruster in _thrusters)
         {
-            _rigidBody.AddForceAtPosition(
-                thruster.transform.up * thruster.ThrustAmount,
-                thruster.transform.position,
-                ForceMode.Force);
+            Velocity += thruster.ThrustAmount * thruster.transform.up * Time.deltaTime;
         }
+
+        transform.Rotate(new Vector3(0, 0, 5 * Time.deltaTime));
     }
 }
