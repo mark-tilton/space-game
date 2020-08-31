@@ -26,11 +26,7 @@ public class OrbitViewer : MonoBehaviour
         var previousFrame = currentFrame;
         for (var i = 0; i < StepCount; i++)
         {
-            var nextFrame = previousFrame;
-            for (int j = 0; j < 1; j++)
-            {
-                nextFrame = _orbitalManager.GetNextFrame(nextFrame, _orbitalManager.TimeStep);
-            }
+            var nextFrame = _orbitalManager.GetNextFrame(previousFrame, _orbitalManager.TimeStep);
             var referencePosition = nextFrame.FirstOrDefault(x => x.Orbital == Reference)?.Position;
             foreach (var (prev, next) in previousFrame.Zip(nextFrame, (p, n) => (p, n)))
             {

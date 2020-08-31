@@ -44,8 +44,7 @@ public class OrbitalManager : MonoBehaviour
                 {
                     continue;
                 }
-                var force = G * otherOrbital.Mass /* * orbital.Mass*/ / sqrDst;
-                var acceleration = force; // / orbital.Mass
+                var acceleration = G * otherOrbital.Mass / sqrDst; // Force, own mass cancels out.
 
                 totalAcceleration += acceleration * dir.normalized;
             }
