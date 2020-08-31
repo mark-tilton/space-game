@@ -6,7 +6,7 @@ public class OrbitalData
 
     public float Mass => Orbital.Mass;
 
-    public Vector3 Position { get; private set; }
+    public Vector3 Position { get; set; }
 
     public Vector3 Velocity { get; private set; }
 

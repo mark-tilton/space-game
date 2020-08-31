@@ -21,6 +21,6 @@ public class Ship : Orbital
             Velocity += thruster.ThrustAmount * thruster.transform.up * Time.deltaTime;
         }
 
-        transform.Rotate(new Vector3(0, 0, 5 * Time.deltaTime));
+        //transform.Rotate(new Vector3(0, 0, 5 * Time.deltaTime));
     }
 }

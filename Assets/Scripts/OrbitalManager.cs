@@ -6,6 +6,7 @@ public class OrbitalManager : MonoBehaviour
 {
     public float G = 0.1f;
     public float TimeStep = 0.01f;
+    public Orbital Reference;
 
     Orbital[] _orbitals;
 
@@ -50,6 +51,13 @@ public class OrbitalManager : MonoBehaviour
             }
             var newOrbitalData = orbital.Add(totalAcceleration, step);
             nextFrame.Add(newOrbitalData);
+        }
+        var referenceStart = Reference == null ? Vector3.zero : _orbitalData.First(x => x.Orbital == Reference).Position;
+        var referenceEnd = Reference == null ? Vector3.zero : nextFrame.First(x => x.Orbital == Reference).Position;
+        var referenceDelta = referenceEnd - referenceStart;
+        foreach (var orbital in nextFrame)
+        {
+            orbital.Position -= referenceDelta;
         }
         return nextFrame;
     }

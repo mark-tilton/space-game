@@ -39,11 +39,6 @@ public class PlayerController : MonoBehaviour
             _cameraRotation += new Vector2(-mouseDelta.y, mouseDelta.x);
             _camera.transform.localRotation = Quaternion.Euler(_cameraRotation.x, 0, 0);
         }
-        if (Input.GetKey(KeyCode.W))
-        {
-            Debug.DrawLine(transform.position, transform.position + transform.forward);
-            _rigidBody.MovePosition(transform.position + transform.TransformDirection(transform.forward * Speed * Time.deltaTime));
-        }
     }
 
     /// <summary>
@@ -52,7 +47,12 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // Gravity
-        _rigidBody.AddForce(-transform.up * 0.1f, ForceMode.Acceleration);
+        _rigidBody.AddForce(-transform.up * 0.1f, ForceMode.Force);
         _rigidBody.MoveRotation(Quaternion.Euler(0, _cameraRotation.y, 0));
+        var vertical = Input.GetAxis("Vertical");
+        var horizontal = Input.GetAxis("Horizontal");
+        _rigidBody.MovePosition(transform.position 
+            + vertical * transform.forward * Speed * Time.deltaTime
+            + horizontal * transform.right * Speed * Time.deltaTime);
     }
 }
